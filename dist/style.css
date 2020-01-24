@@ -9,3 +9,12 @@ body {
     background: #fff;
 
 }
+
+/**/
+.taskBodyHidden {
+    display:none;
+}
+
+.projectBodyHidden {
+    display:none; 
+}

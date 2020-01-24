@@ -15,11 +15,11 @@ const ProjectFactory = (title, description, dueDate) => {
     let todoList = [];
     let isDeleted = false;
 
-    const addTodo = (argList) => {
-        let check = todoAlreadyInProject(argList)
+    const addTodo = (obj) => {
+        let check = todoAlreadyInProject(obj)
 
         if (!check) {
-            todoList.push(TodoFactory(argList[0], argList[1], argList[2], argList[3], argList[4]));
+            todoList.push(TodoFactory(obj.title, obj.description, obj.dueDate, obj.priority, obj.isDone));
         } else {
             console.log('already in project')
             return 'Error, task already in list'
@@ -37,10 +37,10 @@ const ProjectFactory = (title, description, dueDate) => {
         return todoList;
     }
 
-    const todoAlreadyInProject = (argList) => {
+    const todoAlreadyInProject = (obj) => {
         let status;
         todoList.forEach(todo => {
-            if (todo.title === argList[0]) status = true;
+            if (todo.title === obj.title) status = true;
         })
         if (status) return true;
     }
