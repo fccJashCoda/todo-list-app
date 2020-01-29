@@ -1,37 +1,61 @@
-import ProjectFactory from './factories.js';
-import createProjectTemplate from './domOperations.js';
+import AppController from './appController.js';
+import Project from './project.js';
+import renderProjects from './domOperations.js';
 
-let example = ProjectFactory('Clean', 'Clean the garden', 'tomorrow');
+const newProjectTitle = document.getElementById('newProjectTitle');
+const newProjectDueDate = document.getElementById('newProjectDueDate');
+const newProjectDescription = document.getElementById('newProjectDescription');
 
-// ['Clean', 'Clean the garden', 'tomorrow', 'high', false]
+const form = document.querySelector('form')
 
-console.log(example.title);
-console.log(example)
+const submitProject = document.getElementById('submitProject');
 
-example.addTodo({ title:'Lick', description:'Lick the garden', dueDate:'tomorrow', priority: 'high', isDone: false });
-example.addTodo({ title:'Clean', description:'Clean the garden', dueDate:'tomorrow', priority: 'high', isDone: false });
-example.addTodo({ title:'Clean', description:'Clean the garden', dueDate:'tomorrow', priority: 'high', isDone: false });
-example.addTodo({ title:'Clean2', description:'Clean the garden', dueDate:'tomorrow', priority: 'high', isDone: false });
-example.addTodo({ title:'Burn', description:'Burn the garden', dueDate:'tomorrow', priority: 'high', isDone: false });
+submitProject.addEventListener('click', (e) => {
+    e.preventDefault()
+    
+    controller.addProject(newProjectTitle.value, newProjectDescription.value, newProjectDueDate.value, )
+})
 
-console.log('check')
-//console.log(example.todoList)
-console.log('removing Burn')
+let testProject = new Project('test project', 'test purposes', 'when it\'s done')
+testProject.addTodo({ title:'Turn', description:'Burn the garden', dueDate:'tomorrow', priority: 'high', isDone: false })
+testProject.addTodo({ title:'Burn', description:'Burn the garden', dueDate:'tomorrow', priority: 'high', isDone: false })
+testProject.addTodo({ title:'Churn', description:'Burn the garden', dueDate:'tomorrow', priority: 'high', isDone: false })
+testProject.addTodo({ title:'Jason Burn', description:'Burn the garden', dueDate:'tomorrow', priority: 'high', isDone: false })
 
-example.removeTodo('Burn')
+const controller = new AppController()
+//controller.projectList = [testProject] 
 
-console.log(example.logList())
-//console.log(example.todoList)
-
-example.addTodo({ title:'Churn', description:'Chrun the garden', dueDate:'tomorrow', priority: 'high', isDone: false });
-example.removeTodo('Lick')
-console.log(example.logList())
+//controller.addProject('this dude')
 
 
-console.log('wipe everything')
-example.removeAllTasks()
-console.log(example.logList())
+/*
+function checkProjectAlreadyInList (title) {
+    return projectList.some( project => {
+        return (project.title === title)
+    });
+}
 
-console.log('template here')
-console.log(createProjectTemplate({ title: 'test', description:'noodles', list: [{ title: 'task test', description: 'Something has to be done', dueDate: '1.1.1', priority:'High'},{ title: 'task test' },{ title: 'task test' },]}))
-console.log(createProjectTemplate({ title: 'test', description:'noodles', list: [{ title: 'task test' },{ title: 'task test' },{ title: 'task test3', isDone: true },]}))
+function addProject (title, description, dueDate) {
+    if(checkProjectAlreadyInList(title)) return 'Error, task already in list'
+
+    projectList.push( new Project(title, description, dueDate));
+
+    renderProjects(projectList)
+
+    form.reset()
+
+    return
+}
+
+*/
+controller.loadFromLocalStorage()
+controller.saveToLocalStorage()
+
+renderProjects(controller)
+
+const refreshBtn = document.createElement('button')
+refreshBtn.textContent = 'Refresh'
+
+refreshBtn.addEventListener('click', () => console.log(controller.projectList))
+document.querySelector('body').appendChild(refreshBtn)
+

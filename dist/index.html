@@ -10,34 +10,27 @@
 <body>
     <div class="mobileContainer">
         <div class="mainContainer">
-            <h1>Todo</h1>
+            <h1 id="appTitle">Todo</h1>
 
-            <div id="content">
-                <!-- mockup (in progress) -->
-                <h5>project1</h5>
-                <ul>
-                    <li>task</li>
-                    <li>task</li>
-                    <li>task</li>
-                    <li>task</li>
-                </ul>
-                <h5>project2</h5>
-                <ul>
-                    <li>task</li>
-                    <li>task</li>
-                    <li>task</li>
-                    <li>task</li>
-                </ul>
-                <h5>project3</h5>
-                <ul>
-                    <li>task</li>
-                    <li>task</li>
-                    <li>task</li>
-                    <li>task</li>
-                </ul>
+            <button id="addProject">Add a project.</button>
+            
+            <div id="addProjectForm">
+                <form action="">
+                    <label>Project Title</label>
+                    <input type="text" id="newProjectTitle">
+
+                    <label>Due date</label>
+                    <input type="date" id="newProjectDueDate">
+
+                    <label>Project description</label>
+                    <textarea name="" id="newProjectDescription" cols="30" rows="10"></textarea>
+
+                    <button id="submitProject">Add project</button>
+                </form>
             </div>
-            
-            
+            <div id="content">
+                
+            </div>
         </div>
     </div>
     <script src="main.js"></script>
