@@ -8,15 +8,21 @@ function Project(title, description, dueDate) {
 	
 }
 
-Project.prototype.todoAlreadyInProject = function(newTodo) {
-	if (!newTodo) return 'Error'
+Project.prototype.todoAlreadyInProject = function(title) {
+	if (!title) return 'Error'
 
 	return this.todoList.some(todo => {
-		return (todo.title === newTodo.title)
+		return (todo.title === title)
 	})
 }
 
 Project.prototype.addTodo = function ( newTodo ) {
+	/* { title:'Jason Burn', 
+		description:'Burn the garden', 
+		dueDate:'tomorrow', 
+		priority: 'high', 
+		isDone: false } */
+		
 	if (!this.todoAlreadyInProject( newTodo )) {
 		this.todoList.push( newTodo );
 		return

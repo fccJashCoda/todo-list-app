@@ -1,24 +1,35 @@
-body {
-    background: #111;
+/* GLOBALS */
+html {
+    margin:0;
+    padding:0;
 }
-/* */
+body {
+    margin:0;
+    padding:0;
+    background: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .mobileContainer {
     width:300px;
     height: 700px;
-    margin: auto;
+    margin: 20px auto;
     background: #fff;
-
+    border-radius:20px;
+    overflow: auto;
 }
 
-/**/
-.taskBodyHidden {
+.elementHidden {
     display:none;
 }
 
-.projectBodyHidden {
-    display:none; 
+.crossed {
+    text-decoration: line-through;
 }
 
-.crossed {
-    text-decoration: underline;
+/* App Title */
+#appTitle {
+    text-align: center;
 }
+
+/* Buttons */

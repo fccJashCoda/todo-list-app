@@ -13,7 +13,7 @@ const createProjectTemplate = (controller, project) => {
     if (!project) return 'error, no project';
 
     const content = document.getElementById('content');
-
+    
     // Project wrapper
     const projectItem = document.createElement('div');
     projectItem.classList = 'project'
@@ -25,10 +25,10 @@ const createProjectTemplate = (controller, project) => {
     projectTitle.classList = 'projectTitle'
 
     projectTitle.onclick = () => {
-        if (projectBody.classList.contains('projectBodyHidden')) {
+        if (projectBody.classList.contains('elementHidden')) {
             projectBody.classList = 'projectBody';
         } else {
-            projectBody.classList += ' projectBodyHidden'
+            projectBody.classList += ' elementHidden'
         }
     }
 
@@ -39,6 +39,12 @@ const createProjectTemplate = (controller, project) => {
 
     const projectDescription = document.createElement('p');
     projectDescription.textContent = project.description;
+
+    const projectDueDate = document.createElement('p');
+    projectDueDate.textContent = project.dueDate;
+
+    const projectAddTask = document.createElement('div');
+    projectAddTask.id = 'projectAddTaskBody'
 
     const taskList = document.createElement('ul');
     console.log('render loglist function')
@@ -53,33 +59,59 @@ const createProjectTemplate = (controller, project) => {
     }
 
     // Project buttons
-    const addTaskBtn = document.createElement('button');
-    const editProjectBtn = document.createElement('button');
+    const openAddTaskBtn = document.createElement('button');
     const deleteProjectBtn = document.createElement('button');
 
-    addTaskBtn.textContent = 'Add Task'
-    editProjectBtn.textContent = 'Edit';
+    openAddTaskBtn.textContent = 'Add Task';
     deleteProjectBtn.textContent = 'Delete';
 
-    addTaskBtn.id = editProjectBtn.id = deleteProjectBtn.id = project.title
-    addTaskBtn.classList = 'btn btn-primary addTaskBtn';
-    editProjectBtn.classList = 'btn btn-info editProjectBtn';
+    openAddTaskBtn.id = deleteProjectBtn.id = project.title
+    openAddTaskBtn.classList = 'btn btn-primary openAddTaskBtn';
     deleteProjectBtn.classList = 'btn btn-danger deleteProjectBtn';
     
-    addTaskBtn.addEventListener('click', () => {
-        console.log(projectTitle.textContent)
+    openAddTaskBtn.addEventListener('click', (e) => {
+        openAddTaskBtn.classList += ' elementHidden';
+        deleteProjectBtn.classList += ' elementHidden'
+        showAddTaskForm(e.target.previousSibling);
+
+        let submitAddNewTask = document.getElementById('submitAddNewTask');
+        submitAddNewTask.addEventListener('click', (e) => {
+            e.preventDefault()
+            let newTaskTitle = document.getElementById('addNewTaskTitle');
+
+            if (newTaskTitle.value != "" && !project.todoAlreadyInProject(newTaskTitle.value)) {
+                project.addTodo({ 
+                    title: newTaskTitle.value,
+                    description: document.getElementById('addNewTaskDescription').value, 
+                    dueDate: document.getElementById('addNewTaskDueDate').value, 
+                    priority: document.getElementById('addNewTaskPriority').value, 
+                    isDone: false })
+
+                renderProjects(controller)
+                controller.saveToLocalStorage()
+            }
+        });
+
+        let cancelAddNewTask = document.getElementById('cancelAddNewTask');
+        cancelAddNewTask.addEventListener('click', (e) => {
+            e.preventDefault()
+            renderProjects(controller)
+        });
     });
     
     deleteProjectBtn.addEventListener('click', (e) => {
-        console.log(e.target.id)
-        controller.projectList = controller.projectList.filter(item => item.title !== e.target.id)
-        renderProjects(controller)
-        controller.saveToLocalStorage()
+        let check = confirm(`Delete this project? Project: ${project.title}`)
+        if (check) {
+            controller.projectList = controller.projectList.filter(item => item.title !== e.target.id)
+            renderProjects(controller)
+            controller.saveToLocalStorage()
+        }
     });
 
+    projectBody.appendChild(projectDueDate)
     projectBody.appendChild(projectDescription);
-    projectBody.appendChild(addTaskBtn);
-    projectBody.appendChild(editProjectBtn);
+    projectBody.appendChild(projectAddTask);
+    projectBody.appendChild(openAddTaskBtn);
     projectBody.appendChild(deleteProjectBtn);
     projectBody.appendChild(taskList);
 
@@ -87,7 +119,6 @@ const createProjectTemplate = (controller, project) => {
     projectItem.appendChild(projectBody);
     content.appendChild(projectItem);
     
-    return content;
 }
 
 const createTaskTemplate = (controller, obj, task) => {
@@ -102,22 +133,22 @@ const createTaskTemplate = (controller, obj, task) => {
 
     // Show/hide task information: hidden by default
     taskTitle.onclick = () => {
-        if (taskBody.classList.contains('taskBodyHidden')) {
+        if (taskBody.classList.contains('elementHidden')) {
             taskBody.classList = 'taskBody';
         } else {
-            taskBody.classList += ' taskBodyHidden';
+            taskBody.classList += ' elementHidden';
         }
     }
 
     // Task Body
     let taskBody = document.createElement('div');
-    taskBody.classList = 'taskBody taskBodyHidden';
+    taskBody.classList = 'taskBody elementHidden';
 
     let taskDueDate = document.createElement('p');
     taskDueDate.textContent = task.dueDate;
 
     let taskPriority = document.createElement('p');
-    taskPriority.textContent = task.priority;
+    taskPriority.textContent = "priority: " + task.priority;
     
     let taskDescription = document.createElement('p');
     taskDescription.textContent = task.description ;
@@ -145,22 +176,24 @@ const createTaskTemplate = (controller, obj, task) => {
         if (!task.isDone) {
             showEditTaskForm(taskBody, task)
 
+
+            let editTaskDueDate = document.getElementById('editTaskDueDate');
             let editTaskDescription = document.getElementById('editTaskDescription');
-            console.log(editTaskDescription.placeholder)
 
             let submitEditTask = document.getElementById('submitEditTask')
             submitEditTask.addEventListener('click', (e) => {
                 e.preventDefault()
-                task.dueDate = document.getElementById('editTaskDueDate').value;
+                task.dueDate = editTaskDueDate.value || editTaskDueDate.placeholder;
                 task.priority = document.getElementById('editTaskPriority').value;
-                task.description = document.getElementById('editTaskDescription').value;
+                task.description = editTaskDescription.value || editTaskDescription.placeholder;
                 
                 controller.saveToLocalStorage();
                 renderProjects(controller);
             })
 
             let cancelEditTask = document.getElementById('cancelEditTask');
-            cancelEditTask.addEventListener('click', () => {
+            cancelEditTask.addEventListener('click', (e) => {
+                e.preventDefault()
                 renderProjects(controller)
             })
         }
@@ -193,12 +226,64 @@ const createTaskTemplate = (controller, obj, task) => {
     return taskItem;
 }
 
-function showAddTaskForm () {
-    
+//
+function createRawProjectTemplate(block, project) {
+    block.innerHTML += `
+    <div class="project">
+        <h3 class="projectTitle">${project.title}</h3>
+        <div class="projectBody">
+            <p>${project.description}</p>
+            <div id="projectAddTaskBody"></div>
+            <button id="${project.title}" class="btn btn-primary openAddTaskBtn">Add Task</button>
+            <button id="${project.title}" class="btn btn-danger deleteProjectBtn">Delete</button>
+            <ul>
+            </ul>
+        </div>
+    </div>
+    `
+}
+
+function showAddTaskForm (block) {
+    block.innerHTML += `
+        <form action="">
+            <label>Title</label>
+            <input type="text" id="addNewTaskTitle" >
+            
+            <label>Due date</label>
+            <input type="date" id="addNewTaskDueDate" >
+
+            <label>Priority</label>
+            <select name="priority" id="addNewTaskPriority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+
+            <label>Project description</label>
+            <textarea name="" id="addNewTaskDescription" cols="30" rows="10"></textarea>
+
+            <button id="submitAddNewTask" class="btn">Add new task</button>
+            <button id="cancelAddNewTask" class="btn">Cancel</button>
+        </form>`
+}
+
+function createRawTaskTemplate(block, task) {
+    block.innerHTML +=`
+        <h4 class="task">${task.title}</h4>
+        <div class="taskBody">
+            <p>${task.dueDate}</p>
+            <p>${task.priority}</p>
+            <p>${task.description}</p>
+            <button id="${task.title}" class="btn btn-primary completeTaskBtn">Complete</button>
+            <button id="${task.title}" class="btn btn-info editTaskBtn">Edit</button>
+            <button id="${task.title}" class="btn btn-danger deleteTaskBtn">Delete</button>
+        </div>
+    `
 }
 
 function showEditTaskForm (block, task) {
     block.innerHTML = ''
+    console.log(task.description)
     block.innerHTML += `
         <form action="">
             <label>Due date</label>
@@ -212,15 +297,12 @@ function showEditTaskForm (block, task) {
             </select>
 
             <label>Project description</label>
-            <textarea name="" id="editTaskDescription" cols="30" rows="10" placeholder=${task.description}></textarea>
+            <textarea name="" id="editTaskDescription" cols="30" rows="10" placeholder="${task.description}"></textarea>
 
-            <button id="submitEditTask">Edit task</button>
-            <button id="cancelEditTask">Cancel</button>
+            <button id="submitEditTask" class="btn">Edit task</button>
+            <button id="cancelEditTask" class="btn">Cancel</button>
         </form>`
 }
 
-function showEditProjectForm () {
-
-}
 
 export default renderProjects;
