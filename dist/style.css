@@ -36,9 +36,6 @@ body {
 }
 
 /* Projects */
-.project {
-
-}
 
 .projectBody {
     border-bottom: 1px solid black
@@ -78,12 +75,8 @@ body {
     background: linear-gradient(0deg, rgba(254,246,246,1) 0%, rgba(231,231,240,1) 54%, rgba(255,255,255,1) 100%);
 }
 
+.taskPriority,
 .taskDueDate {
-    font-size: .8rem;
-    margin: 0;
-}
-
-.taskPriority {
     font-size: .8rem;
     margin: 0;
 }
@@ -99,24 +92,13 @@ body {
     cursor: pointer;
 }
 
-.btn-primary {
-    background:rgb(25, 25, 231);
-}
 
 .btn-info {
     background: rgb(62, 108, 146);
 }
 
-.btn-warning {
-    background: rgb(182, 118, 0);
-}
-
 .btn-danger {
     background: rgb(168, 0, 0);
-}
-
-.btn-primary:hover {
-    background:blue;
 }
 
 .btn-info:hover {
@@ -125,10 +107,6 @@ body {
 
 .btn-warning:hover {
     background: orange;
-}
-
-.btn-danger:hover {
-    background: red;
 }
 
 .completeTaskBtn {
@@ -150,6 +128,7 @@ body {
     cursor: pointer;
 }
 
+.btn-danger:hover,
 #addProject:hover {
     background: red;
 }
@@ -164,10 +143,6 @@ body {
     cursor: pointer;
 }
 
-#submitProject:hover {
-    background: blue;
-}
-
 #cancelProject {
     background: rgb(182, 118, 0);
     font-weight: bold;
@@ -178,24 +153,31 @@ body {
     cursor: pointer;
 }
 
-#cancelProject:hover {
-    background: orange;
-}
-
-
-
+.btn-primary,
+#submitEditTask,
 #submitAddNewTask {
     background: rgb(25, 25, 231);
 }
 
+.btn-warning,
+#cancelEditTask,
 #cancelAddNewTask {
     background: rgb(182, 118, 0);
 }
 
+.btn-primary:hover,
+#submitProject:hover,
+#submitEditTask:hover,
 #submitAddNewTask:hover {
     background: blue;
 }
 
+#cancelProject:hover,
+#cancelEditTask:hover,
 #cancelAddNewTask:hover {
     background: orange;
 }
+
+
+
+

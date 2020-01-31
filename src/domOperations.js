@@ -255,9 +255,11 @@ function showAddTaskForm (block) {
             <label>Title</label>
             <input type="text" id="addNewTaskTitle" >
             
+            <br>
             <label>Due date</label>
             <input type="date" id="addNewTaskDueDate" >
 
+            <br>
             <label>Priority</label>
             <select name="priority" id="addNewTaskPriority">
                 <option value="High">High</option>
@@ -265,6 +267,7 @@ function showAddTaskForm (block) {
                 <option value="Low">Low</option>
             </select>
 
+            <br>
             <label>Project description</label>
             <textarea name="" id="addNewTaskDescription" cols="30" rows="10"></textarea>
 
@@ -295,6 +298,7 @@ function showEditTaskForm (block, task) {
             <label>Due date</label>
             <input type="date" id="editTaskDueDate" placeholder=${task.dueDate}>
 
+            <br>
             <label>Priority</label>
             <select name="priority" id="editTaskPriority">
                 <option value="High">High</option>
@@ -302,6 +306,7 @@ function showEditTaskForm (block, task) {
                 <option value="Low">Low</option>
             </select>
 
+            <br>
             <label>Project description</label>
             <textarea name="" id="editTaskDescription" cols="30" rows="10" placeholder="${task.description}"></textarea>
 
