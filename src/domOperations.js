@@ -21,7 +21,7 @@ const createProjectTemplate = (controller, project) => {
     
     // Project Header
     const projectTitle = document.createElement('h3');
-    projectTitle.textContent = project.title;
+    projectTitle.textContent = `Project: ${project.title}`;
     projectTitle.classList = 'projectTitle'
 
     projectTitle.onclick = () => {
@@ -39,14 +39,17 @@ const createProjectTemplate = (controller, project) => {
 
     const projectDescription = document.createElement('p');
     projectDescription.textContent = project.description;
+    projectDescription.classList = 'projectDescription';
 
     const projectDueDate = document.createElement('p');
-    projectDueDate.textContent = project.dueDate;
+    projectDueDate.textContent = `Due: ${project.dueDate}`;
+    projectDueDate.classList = 'projectDueDate';
 
     const projectAddTask = document.createElement('div');
     projectAddTask.id = 'projectAddTaskBody'
 
     const taskList = document.createElement('ul');
+    taskList.classList = 'taskList'
     console.log('render loglist function')
     
     if (project.todoList && project.todoList.length > 0) {
@@ -145,13 +148,16 @@ const createTaskTemplate = (controller, obj, task) => {
     taskBody.classList = 'taskBody elementHidden';
 
     let taskDueDate = document.createElement('p');
-    taskDueDate.textContent = task.dueDate;
+    taskDueDate.textContent = `Due: ${task.dueDate}`;
+    taskDueDate.classList = 'taskDueDate';
 
     let taskPriority = document.createElement('p');
-    taskPriority.textContent = "priority: " + task.priority;
+    taskPriority.textContent = `priority: ${task.priority}`;
+    taskPriority.classList = 'taskPriority';
     
     let taskDescription = document.createElement('p');
     taskDescription.textContent = task.description ;
+    taskDescription.classList = 'taskDescription'
 
     // Task buttons
     const completeTaskBtn = document.createElement('button');

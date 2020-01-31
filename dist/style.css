@@ -14,6 +14,7 @@ body {
     width:300px;
     height: 700px;
     margin: 20px auto;
+    padding: 5px;
     background: #fff;
     border-radius:20px;
     overflow: auto;
@@ -25,11 +26,176 @@ body {
 
 .crossed {
     text-decoration: line-through;
+    background: rgb(254,246,246);
+    background: linear-gradient(0deg, rgba(254,246,246,1) 0%, rgba(211,211,227,1) 54%, rgba(255,255,255,1) 100%);
+    color:#555;
 }
-
 /* App Title */
 #appTitle {
     text-align: center;
 }
 
+/* Projects */
+.project {
+
+}
+
+.projectBody {
+    border-bottom: 1px solid black
+}
+
+.projectTitle {
+    margin-bottom:0;
+    cursor: pointer;
+}
+.projectDueDate {
+    font-size: .8rem;
+    margin: 0;
+}
+
+.projectDescription {
+    margin-top: 5px;
+}
+
+
+/* TaskList */
+.taskList {
+    list-style: none;
+    padding: 0;
+}
+
+/* Tasks */
+.task {
+    font-size: .9rem;
+    cursor: pointer;
+    margin: 0;
+    padding: 5px;
+    border-top: 1px solid #777;
+}
+
+.task:hover {
+    background: rgb(254,246,246);
+    background: linear-gradient(0deg, rgba(254,246,246,1) 0%, rgba(231,231,240,1) 54%, rgba(255,255,255,1) 100%);
+}
+
+.taskDueDate {
+    font-size: .8rem;
+    margin: 0;
+}
+
+.taskPriority {
+    font-size: .8rem;
+    margin: 0;
+}
+
 /* Buttons */
+.btn {
+    color:#fff;
+    padding: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background:rgb(25, 25, 231);
+}
+
+.btn-info {
+    background: rgb(62, 108, 146);
+}
+
+.btn-warning {
+    background: rgb(182, 118, 0);
+}
+
+.btn-danger {
+    background: rgb(168, 0, 0);
+}
+
+.btn-primary:hover {
+    background:blue;
+}
+
+.btn-info:hover {
+    background: steelblue;
+}
+
+.btn-warning:hover {
+    background: orange;
+}
+
+.btn-danger:hover {
+    background: red;
+}
+
+.completeTaskBtn {
+    background: rgb(0, 102, 0);
+}
+.completeTaskBtn:hover {
+    background: green;
+}
+
+#addProject {
+    width:100%;
+    height: 2.5rem;
+    background: rgb(184, 0, 0);
+    font-weight: bold;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addProject:hover {
+    background: red;
+}
+
+#submitProject {
+    background: rgb(25, 25, 231);
+    font-weight: bold;
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#submitProject:hover {
+    background: blue;
+}
+
+#cancelProject {
+    background: rgb(182, 118, 0);
+    font-weight: bold;
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cancelProject:hover {
+    background: orange;
+}
+
+
+
+#submitAddNewTask {
+    background: rgb(25, 25, 231);
+}
+
+#cancelAddNewTask {
+    background: rgb(182, 118, 0);
+}
+
+#submitAddNewTask:hover {
+    background: blue;
+}
+
+#cancelAddNewTask:hover {
+    background: orange;
+}

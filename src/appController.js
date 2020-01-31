@@ -30,7 +30,20 @@ AppController.prototype.saveToLocalStorage = function() {
 
         return 'Updated existing database'
     } 
-
+    
+    
+    this.addProject(
+        'Sample Project',
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        '2020-01-01',
+    );
+    this.projectList[0].addTodo({
+        title:'Sample Todo',
+        description:'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        dueDate:'2020-01-01',
+        priority:'Low',
+        isDone:false,
+    });
     let projects = this.projectList;
     localStorage.setItem('projects', JSON.stringify(projects));
 

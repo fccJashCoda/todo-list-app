@@ -37,7 +37,11 @@ addProject.addEventListener('click', (e) => {
     });
 });
 
-controller.loadFromLocalStorage()
+if (localStorage.getItem('projects') !== null) {
+    controller.loadFromLocalStorage()
+} else {
+    controller.saveToLocalStorage()
+}
 
 renderProjects(controller)
 
